@@ -38,4 +38,28 @@ const requestReferral = async(req,res)=>{
 
     }
 }
+
+const updateReferralStatus =async(req,res)=>{
+    try{
+            const {status}=req.params;
+            const { responseMessage }=req.body;
+            if(!["approved","rejected"].includes( status )){
+                return res.status(400).json({ message:"invalid status "});
+            }
+            const referral= await Referral.findById(req.params.id);
+            if(!referral){
+                return res.status(404).json({ message:"referral not found"});
+            }
+            referral.status=status;
+            referral.responseMessage=responseMessage;
+            await referral.save();
+            res.json(referral);
+
+    }catch(err){
+        res.status(500).json({
+            message:err.message
+        });
+
+    }
+}
 export {requestReferral};
