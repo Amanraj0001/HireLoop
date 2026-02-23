@@ -62,4 +62,4 @@ const updateReferralStatus =async(req,res)=>{
 
     }
 }
-export {requestReferral};
+export {requestReferral,updateReferralStatus};
